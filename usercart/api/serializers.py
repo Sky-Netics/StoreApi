@@ -1,12 +1,12 @@
 from rest_framework import serializers
-from productsapp.models import Product,Cart, CartItem
+from usercart.models import Cart, CartItem
 
 
-class ProductsSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField()
-    class Meta:
-        model = Product
-        fields = "__all__"
+# class ProductsSerializer(serializers.ModelSerializer):
+#     id = serializers.IntegerField()
+#     class Meta:
+#         model = Product
+#         fields = "__all__"
        
 
 

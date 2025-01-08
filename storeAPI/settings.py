@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'drf_yasg',
     'authapp.apps.authappConfig',
-    'productsapp'
+    'products',
+    'usercart'
 ]
 
 MIDDLEWARE = [

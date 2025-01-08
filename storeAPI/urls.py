@@ -28,7 +28,8 @@ urlpatterns = [
    
     path('admin/', admin.site.urls),
     path('account/', include('authapp.api.urls')),
-    path('store/', include('productsapp.api.urls')),
+    path('store/', include('products.api.urls')),
+    path('usercart/', include('usercart.api.urls')),
     
 
 

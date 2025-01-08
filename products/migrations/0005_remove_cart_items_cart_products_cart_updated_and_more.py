@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('productsapp', '0004_cart_items_alter_cart_user_alter_cartitem_cart'),
+        ('products', '0004_cart_items_alter_cart_user_alter_cartitem_cart'),
     ]
 
     operations = [
@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='cart',
             name='products',
-            field=models.ManyToManyField(related_name='carts', through='productsapp.CartItem', to='productsapp.product'),
+            field=models.ManyToManyField(related_name='carts', through='products.CartItem', to='products.product'),
         ),
         migrations.AddField(
             model_name='cart',
@@ -28,6 +28,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='cartitem',
             name='cart',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='items', to='productsapp.cart'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='items', to='products.cart'),
         ),
     ]
