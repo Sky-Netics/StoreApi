@@ -30,9 +30,9 @@ urlpatterns = [
     path('account/', include('authapp.api.urls')),
     path('store/', include('products.api.urls')),
     path('usercart/', include('usercart.api.urls')),
+    path('userorder/', include('orders.api.urls')),
+
     
-
-
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

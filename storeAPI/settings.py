@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'drf_yasg',
     'authapp.apps.authappConfig',
     'products',
-    'usercart'
+    'usercart',
+    'orders'
 ]
 
 MIDDLEWARE = [

@@ -9,6 +9,7 @@ class Cart(models.Model):
     created = models.DateTimeField(default=now)
     updated = models.DateTimeField(auto_now=True)
     products = models.ManyToManyField(Product, through='CartItem', related_name='carts')
+    
     def __str__(self):
         return f"Cart of {self.user.username}"
 
