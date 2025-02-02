@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     'authapp.apps.authappConfig',
     'products',
     'usercart',
-    'orders'
+    'orders',
+   
+
 ]
 
 
