@@ -7,6 +7,7 @@ from authapp.models import Profile
 
 
 class ProfileSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source='user.username', read_only=True)
     class Meta:
         model = Profile
         # fields = "__all__"

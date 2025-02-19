@@ -11,8 +11,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response 
 from rest_framework.views import APIView
 from django.contrib.auth.models import User
-
+from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework.generics import get_object_or_404
 
 class LogoutView(APIView): 
     permission_classes = [IsAuthenticated]
@@ -47,30 +48,33 @@ class SignUp(APIView):
 
 
 class ProfileView(APIView):
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                'username', openapi.IN_QUERY, description="Username of the user", type=openapi.TYPE_STRING
+            )
+        ]
+    )
     def get(self, request):
-        profiledata = Profile.objects.all()
+        username = request.GET.get('username')  # گرفتن پارامتر از URL
 
-        serializer = ProfileSerializer(profiledata, many=True)
-        return Response(serializer.data)
+        if not username:
+            return Response({"error": "Username is required"}, status=status.HTTP_400_BAD_REQUEST)
+
+        user = get_object_or_404(User, username=username)  # پیدا کردن کاربر
+        profile = get_object_or_404(Profile, user=user)  # پیدا کردن پروفایل کاربر
+
+        serializer = ProfileSerializer(profile)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    # def get(self, request):
+    #     profiledata = Profile.objects.all()
+
+    #     serializer = ProfileSerializer(profiledata, many=True)
+    #     return Response(serializer.data)
 
     
     @swagger_auto_schema(request_body=ProfileUpdateSerializer)
-    # def put(self, request):
-    #     # Get the object by ID
-    #     username = request.data.get('username')
-
-    #     try:
-    #         # Get the User instance by username
-    #         user = User.objects.get(username=username)
-    #         serializer = ProfileUpdateSerializer(user, data=request.data, partial=True)
-    #         if serializer.is_valid():
-    #             # Save the updated data
-    #             serializer.save()
-    #             return Response(serializer.data, status=status.HTTP_200_OK)
-    #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    #     except User.DoesNotExist:
-    #         raise NotFound(f"User with username {username} not found")
+    
 
     def put(self, request):
             # Get the username from the request body
