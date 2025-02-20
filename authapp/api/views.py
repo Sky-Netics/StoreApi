@@ -48,24 +48,33 @@ class SignUp(APIView):
 
 
 class ProfileView(APIView):
-    @swagger_auto_schema(
-        manual_parameters=[
-            openapi.Parameter(
-                'username', openapi.IN_QUERY, description="Username of the user", type=openapi.TYPE_STRING
-            )
-        ]
-    )
+    # authentication_classes = [JWTAuthentication]  # احراز هویت با JWT
+    permission_classes = [IsAuthenticated]
+    # @swagger_auto_schema(
+    #     manual_parameters=[
+    #         openapi.Parameter(
+    #             'username', openapi.IN_QUERY, description="Username of the user", type=openapi.TYPE_STRING
+    #         )
+    #     ]
+    # )
+
     def get(self, request):
-        username = request.GET.get('username')  # گرفتن پارامتر از URL
-
-        if not username:
-            return Response({"error": "Username is required"}, status=status.HTTP_400_BAD_REQUEST)
-
-        user = get_object_or_404(User, username=username)  # پیدا کردن کاربر
-        profile = get_object_or_404(Profile, user=user)  # پیدا کردن پروفایل کاربر
+        # دریافت کاربر لاگین شده
+        profile = get_object_or_404(Profile, user=request.user)
 
         serializer = ProfileSerializer(profile)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    # def get(self, request):
+    #     username = request.GET.get('username')  # گرفتن پارامتر از URL
+
+    #     if not username:
+    #         return Response({"error": "Username is required"}, status=status.HTTP_400_BAD_REQUEST)
+
+    #     user = get_object_or_404(User, username=username)  # پیدا کردن کاربر
+    #     profile = get_object_or_404(Profile, user=user)  # پیدا کردن پروفایل کاربر
+
+    #     serializer = ProfileSerializer(profile)
+    #     return Response(serializer.data, status=status.HTTP_200_OK)
     # def get(self, request):
     #     profiledata = Profile.objects.all()
 
