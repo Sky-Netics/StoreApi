@@ -6,22 +6,22 @@ from django.utils import timezone
 # Create your models here.
 
 class Offer(models.Model):
-    title = models.CharField(max_length=50)  # عنوان تخفیف (مثلاً یلدای شگفت‌انگیز)
-    description = models.TextField(blank=True)  # توضیحات بیشتر درباره تخفیف
+    title = models.CharField(max_length=50)  
+    description = models.TextField(blank=True) 
     discount_percentage = models.DecimalField(
         max_digits=5,
         decimal_places=2,
         validators=[MinValueValidator(0), MaxValueValidator(100)]
-    )  # درصد تخفیف
-    start_date = models.DateTimeField()  # تاریخ شروع تخفیف
-    end_date = models.DateTimeField()  # تاریخ پایان تخفیف
+    )  
+    start_date = models.DateTimeField()  
+    end_date = models.DateTimeField()  
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.title} - {self.discount_percentage}%"
 
     def is_active(self):
-        """ بررسی می‌کند که تخفیف هنوز معتبر است یا نه """
+        
         now = timezone.now()
         return self.start_date <= now <= self.end_date
 
