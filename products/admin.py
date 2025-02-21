@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product
+from .models import Product, Offer
 
 
 class ProductAdmin(admin.ModelAdmin):
@@ -8,19 +8,12 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ('created', 'updated') 
     ordering = ('-created',)  
 
+class OfferAdmin(admin.ModelAdmin):
+    list_display = ('title', 'discount_percentage', 'start_date', 'end_date')
+    search_fields = ('title',)
+    list_filter = ('start_date', 'end_date')
 
-# class CartAdmin(admin.ModelAdmin):
-#     list_display = ('user', 'created')  
-#     search_fields = ('user__username',) 
-#     ordering = ('-created',) 
-
-
-# class CartItemAdmin(admin.ModelAdmin):
-#     list_display = ('cart', 'product', 'quantity') 
-#     search_fields = ('cart__user__username', 'product__name')  
-#     list_filter = ('cart__created',)  
 
 
 admin.site.register(Product, ProductAdmin)
-# admin.site.register(Cart, CartAdmin)
-# admin.site.register(CartItem, CartItemAdmin)
+admin.site.register(Offer, OfferAdmin)
