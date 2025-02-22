@@ -44,7 +44,8 @@ class AddToCartView(APIView):
             "message": "Item added to cart successfully",
             "product_name": cart_item.product.name,
             "quantity": cart_item.quantity,
-            "total_price": cart_item.get_total_price()
+            "total_price": cart_item.get_total_price(),
+            "cart_total_price": cart.get_total_price()
         }, status=status.HTTP_200_OK)
 
     @swagger_auto_schema(request_body=CartItemQuantitySerializer)
