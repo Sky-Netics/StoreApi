@@ -17,9 +17,11 @@ from drf_yasg.utils import swagger_auto_schema
 
 
 class CartView(APIView):
-    
+    authentication_classes = [JWTAuthentication] 
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
-        cart = Cart.objects.all()
+        cart = Cart.objects.filter(user=request.user)
         serializer = CartSerializer(cart, many=True)
         return Response(serializer.data)
 
